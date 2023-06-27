@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/appBar/index.dart';
+import '../store/favorites_pokemons.dart';
 import '../store/pokemons.dart';
 
 class Home extends StatelessWidget {
@@ -8,93 +10,60 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.watch<PaginationPokemons>().isLoading;
-    final hasFetched = context.watch<PaginationPokemons>().hasFetched;
+    final pagination = context.watch<PaginationPokemons>();
+    final isLoading = pagination.isLoading;
+    final hasFetched = pagination.hasFetched;
+    context.read<FavoritesPokemons>().getFavorites();
 
     if (hasFetched == false) {
-      context.read<PaginationPokemons>().build();
+      pagination.build();
     }
 
-    if (isLoading) {
-      return Container(
-        color: Colors.green,
-        child: const Center(
-          child: CircularProgressIndicator(
-            color: Colors.white70,
-          ),
-        ),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: const Padding(
-            padding: EdgeInsets.only(right: 90),
-            child: Center(
-              child: Text(
-                "App Pokemon",
-                style: TextStyle(
-                  fontSize: 20,
+    return AppScaffold(
+      body: isLoading
+          ? Container(
+              color: Colors.green.withOpacity(0.5),
+              height: double.infinity,
+              width: double.infinity,
+              child: const Center(
+                child: CircularProgressIndicator(
                   color: Colors.white70,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
                 ),
               ),
+            )
+          : ListView(
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 12, left: 12, right: 12),
+              children: pagination.pokemons,
             ),
-          )),
-      endDrawer: Drawer(
-          shadowColor: Colors.green,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                ),
-                child: Text(
-                  'App Pokemon guarani sistemas',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.star, color: Colors.yellow),
-                title: const Text('Favoritos'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          )),
-      body: ListView(
-        padding:
-            const EdgeInsets.only(top: 10, bottom: 12, left: 12, right: 12),
-        children: context.watch<PaginationPokemons>().pokemons,
-      ),
-      backgroundColor: Colors.white70,
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Colors.green,
-        child: Container(
+        child: SizedBox(
           height: 60.0,
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             IconButton(
-                icon: const Icon(Icons.remove, color: Colors.white),
-                onPressed: () {
-                  context.read<PaginationPokemons>().previousPage();
-                },
+                disabledColor: Colors.grey,
+                color: Colors.white,
+                icon: const Icon(Icons.remove),
+                onPressed: pagination.hasPreviewPage
+                    ? () {
+                        pagination.previousPage();
+                      }
+                    : null,
                 tooltip: "Previous Page"),
             const SizedBox(
               width: 20,
             ),
             IconButton(
-                icon: const Icon(Icons.add, color: Colors.white),
-                onPressed: () {
-                  context.read<PaginationPokemons>().nextPage();
-                },
+                disabledColor: Colors.grey,
+                color: Colors.white,
+                icon: const Icon(Icons.add),
+                onPressed: pagination.hasNextPage
+                    ? () {
+                        pagination.nextPage();
+                      }
+                    : null,
                 tooltip: "Next Page"),
           ]),
         ),

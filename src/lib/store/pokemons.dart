@@ -11,6 +11,9 @@ class PaginationPokemons extends ChangeNotifier {
 
   List<Widget> get pokemons => _pokemons;
 
+  bool get hasNextPage => !(_nextPage?.hasEmptyPath ?? true);
+  bool get hasPreviewPage => !(_previousPage?.hasEmptyPath ?? true);
+
   final poke = ListPokemons();
 
   Future<void> build() async {
