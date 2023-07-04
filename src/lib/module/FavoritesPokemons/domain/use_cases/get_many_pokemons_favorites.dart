@@ -9,9 +9,11 @@ class GetManyPokemonsFavoritesUseCase {
 
   GetManyPokemonsFavoritesUseCase(this._repository);
 
-  Future<Either<Failure, List<FavoritePokemonModel>>> call() async {
+  Future<Either<Failure, List<FavoritePokemonModel>>> call(
+      int page, int perPage) async {
     try {
-      final response = await _repository.getManyFavoritesPokemons();
+      final response =
+          await _repository.getManyFavoritesPokemons(page, perPage);
 
       return Right(response);
     } catch (e, stackTrace) {

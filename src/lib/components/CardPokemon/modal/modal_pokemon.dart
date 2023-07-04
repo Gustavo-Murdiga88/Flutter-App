@@ -69,8 +69,9 @@ class ModalPokemon {
                             right: 20, left: 30, bottom: 20),
                         child: Image.network(
                           _img,
-                          height: 120,
-                          fit: BoxFit.cover,
+                          height: 190,
+                          width: 120,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
@@ -91,10 +92,13 @@ class ModalPokemon {
                                   const SizedBox(
                                     width: 20,
                                   ),
-                                  Text(_specie,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                  Flexible(
+                                    child: Text(_specie,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          overflow: TextOverflow.ellipsis,
+                                        )),
+                                  ),
                                 ],
                               ),
                               const SizedBox(

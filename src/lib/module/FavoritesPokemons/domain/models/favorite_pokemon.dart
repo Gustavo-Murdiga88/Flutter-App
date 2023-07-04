@@ -7,6 +7,7 @@ class FavoritePokemonModel {
   final String weight;
   final String base_exprecience;
   final String specie;
+  final bool isFavorite;
 
   FavoritePokemonModel({
     required this.id,
@@ -14,6 +15,7 @@ class FavoritePokemonModel {
     required this.weight,
     required this.base_exprecience,
     required this.specie,
+    required this.isFavorite,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,6 +35,7 @@ class FavoritePokemonModel {
       weight: map['weight'] as String,
       base_exprecience: map['base_exprecience'] as String,
       specie: map['specie'] as String,
+      isFavorite: true,
     );
   }
 

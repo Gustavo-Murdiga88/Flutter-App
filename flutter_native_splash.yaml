@@ -1,0 +1,17 @@
+flutter_native_splash:
+  color: "#008000"
+  background_image: assets/logo.png
+  color_dark: "#008000"
+
+  android_12:
+    color_dark: "#008000"
+    image: assets/logo.png
+    background_image: assets/logo.png
+  
+  background_image_android: "assets/logo.png"
+  background_image_dark_android: "assets/logo.png"
+  background_image_ios: "assets/logo.png"
+  background_image_dark_ios: "assets/logo.png"
+
+  android_gravity: fill
+  ios_content_mode: scaleToFill

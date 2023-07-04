@@ -1,22 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class AppScaffold extends StatelessWidget {
-  const AppScaffold({super.key, required this.body, this.bottomNavigationBar});
+  const AppScaffold({
+    Key? key,
+    required this.body,
+    this.title,
+    this.bottomNavigationBar,
+  }) : super(key: key);
 
   final Widget body;
   final BottomAppBar? bottomNavigationBar;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.green,
-          title: const Padding(
-            padding: EdgeInsets.only(right: 90),
+          title: Padding(
+            padding: const EdgeInsets.only(right: 90),
             child: Center(
               child: Text(
-                "App Pokemon",
-                style: TextStyle(
+                title ?? "App Pokemon",
+                style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white70,
                   fontWeight: FontWeight.bold,
@@ -60,7 +68,7 @@ class AppScaffold extends StatelessWidget {
                 leading: const Icon(Icons.star, color: Colors.yellow),
                 title: const Text('Favoritos'),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, "/favorites");
+                  Modular.to.popAndPushNamed("/favorites");
                 },
               ),
             ],

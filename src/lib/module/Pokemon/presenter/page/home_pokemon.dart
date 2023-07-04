@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:http/http.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../../components/appBar/app_bar.dart';
+import '../../../../components/toast/toast.dart';
 import '../../../../core/services/infra/hive/adpter.dart';
+import '../../../../main.dart';
 import '../../domain/models/favoritePokemon.dart';
-import 'CardPokemon/index.dart';
-import '../../../../components/appBar/index.dart';
-import '../../domain/use_cases/get_pokemon.dart';
-import '../../domain/use_cases/get_pokemons.dart';
-import '../../external/data/pokemons_datasouce.dart';
-import '../../infra/repositories/pokemons_repository.dart';
+import '../../../../components/CardPokemon/card_pokemo_widget.dart';
 import '../states/pokemons_states.dart';
+import '../store/favorite_pokemon_store.dart';
 import '../store/pokemon_store.dart';
 
 class Home extends StatefulWidget {
@@ -23,14 +22,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final state = PokemonsState(
-      GetPokemonsUseCase(PokemonsRepository(
-          PokemonsData(Client(), Hive.box<ModelPokemon>("poke")))),
-      GetPokemonUseCase(PokemonsRepository(
-          PokemonsData(Client(), Hive.box<ModelPokemon>("poke")))));
+  final favoriteStore = Modular.get<FavoriteStore>();
+  final state = Modular.get<PokemonsState>();
 
-  bool areFavoritePokemon(int id) {
-    final result = widget.favorites.where((item) => item.id == id).toList();
+  bool areFavoritePokemon(List<FavoritePokemonModel> favorites, int id) {
+    final result = favorites.where((item) => item.id == id).toList();
 
     if (result.isEmpty) {
       return false;
@@ -42,7 +38,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-
     state.addListener(() {
       setState(() {});
     });
@@ -79,9 +74,37 @@ class _HomeState extends State<Home> {
                   itemCount: value.results.length,
                   itemBuilder: (context, index) {
                     return CardPokemon(
+                        favorite: () {
+                          favoriteStore.favoritePokemon(ModelPokemon(
+                              id: value.results[index].id,
+                              name: value.results[index].name,
+                              weight: value.results[index].weight.toString(),
+                              base_exprecience: value
+                                  .results[index].base_experience
+                                  .toString(),
+                              specie: value.results[index].name));
+
+                          fToast.showToast(
+                            child: const ToastComponent(
+                                toastType: ToastType.success,
+                                message: "Pokemon adicionado com sucesso"),
+                            gravity: ToastGravity.TOP_LEFT,
+                          );
+                        },
+                        unFavorite: () {
+                          favoriteStore
+                              .unFavoritePokemon(value.results[index].id);
+                          fToast.showToast(
+                            child: const ToastComponent(
+                                toastType: ToastType.alert,
+                                message: "Pokemon removido com sucesso"),
+                            gravity: ToastGravity.TOP_LEFT,
+                          );
+                        },
                         name: value.results[index].name,
                         img: value.results[index].img,
-                        isFavorite: areFavoritePokemon(value.results[index].id),
+                        isFavorite: areFavoritePokemon(
+                            widget.favorites, value.results[index].id),
                         gradient: value.results[index].gradient,
                         weight: value.results[index].weight.toString(),
                         xp: value.results[index].base_experience.toString(),

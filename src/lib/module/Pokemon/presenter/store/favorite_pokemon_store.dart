@@ -13,6 +13,10 @@ class FavoriteStore extends ValueNotifier<FavoritePokemonState> {
   FavoriteStore(this.favoritePokemon, this.unFavoritePokemon)
       : super(InitialStateFavoritePokemon());
 
+  void initialState(bool initial) {
+    value = InitialStateFavoritePokemon(isFavorite: initial);
+  }
+
   void favorite(ModelPokemon pokemon) {
     final response = favoritePokemon(pokemon);
 

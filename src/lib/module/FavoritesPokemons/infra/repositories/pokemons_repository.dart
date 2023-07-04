@@ -11,9 +11,10 @@ class FavoritesRepository implements IFavoritesRepository {
   FavoritesRepository(this.dataSource);
 
   @override
-  Future<List<FavoritePokemonModel>> getManyFavoritesPokemons() async {
+  Future<List<FavoritePokemonModel>> getManyFavoritesPokemons(
+      page, perPage) async {
     try {
-      return dataSource.getFavoritesPokemons();
+      return dataSource.getFavoritesPokemons(page, perPage);
     } catch (e, stackTrace) {
       throw Failure(message: e.toString(), stackTrace: stackTrace);
     }
