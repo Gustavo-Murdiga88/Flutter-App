@@ -1,42 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 
-import 'pages/home_page.dart';
-import 'store/pokemons.dart';
+import 'app_module.dart';
+import 'app_widget.dart';
+import 'core/services/infra/hive/adpter.dart';
+
+late FToast fToast;
 
 void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  Hive.registerAdapter(PokemonAdapter());
   await Hive.initFlutter();
-  await Hive.openBox('pokeDex');
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => PaginationPokemons()),
-    ],
-    child: const MyApp(),
-  ));
-}
+  await Hive.openBox<ModelPokemon>("poke");
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pokemon App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      initialRoute: "/home",
-      routes: {
-        "/home": (context) => ValueListenableBuilder<Box>(
-              valueListenable: Hive.box("pokeDex").listenable(),
-              builder: (context, box, widget) {
-                return const Home();
-              },
-            ),
-      },
-    );
-  }
+  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
+  FlutterNativeSplash.remove();
 }
