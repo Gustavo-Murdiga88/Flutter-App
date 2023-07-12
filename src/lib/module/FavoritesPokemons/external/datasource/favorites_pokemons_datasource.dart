@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../../core/services/infra/hive/adpter.dart';
 import '../../../Pokemon/domain/models/favoritePokemon.dart';
 
 abstract class IFavoritesPokemonsDataSource {
@@ -10,7 +12,7 @@ abstract class IFavoritesPokemonsDataSource {
 }
 
 class FavoritesPokemonsDataSource implements IFavoritesPokemonsDataSource {
-  final Box<dynamic> pokeDex;
+  final Box<ModelPokemon> pokeDex;
 
   FavoritesPokemonsDataSource(
     this.pokeDex,
@@ -19,37 +21,39 @@ class FavoritesPokemonsDataSource implements IFavoritesPokemonsDataSource {
   @override
   List<FavoritePokemonModel> getFavoritesPokemons(page, perPage) {
     try {
-      final totalItems = pokeDex.length;
-      var lastIndex = (page * perPage) + perPage;
-      lastIndex = lastIndex < totalItems ? lastIndex : totalItems;
-      var initialIndex = page * perPage;
+      final pokemons = pokeDex.values;
 
-      final pokemons = pokeDex.values.toList().reversed.skip(initialIndex);
-
-      if (lastIndex < totalItems) {
-        final favoritesPokemons = pokemons.takeWhile((value) {
-          if (initialIndex < lastIndex) {
-            initialIndex++;
-            return true;
-          }
-          return false;
-        }).toList();
-
-        final list = favoritesPokemons.map((e) {
-          final favoritePokemon = FavoritePokemonModel(
-              isFavorite: true,
-              base_experience: int.parse(e.base_exprecience),
-              id: e.id,
-              name: e.name,
-              weight: int.parse(e.weight));
-
-          return favoritePokemon;
-        }).toList();
-
-        return list;
+      if (pokemons.isEmpty) {
+        return <FavoritePokemonModel>[];
       }
 
-      return <FavoritePokemonModel>[];
+      final lastIndexPage = (page * perPage) + perPage;
+      final initialIndexPage = (page * perPage);
+      final lastIndexOfListPokemons = pokemons.length;
+
+      final lastIndex = lastIndexOfListPokemons > lastIndexPage
+          ? lastIndexPage
+          : lastIndexOfListPokemons;
+
+      final initialIndex =
+          initialIndexPage > lastIndexOfListPokemons ? 0 : initialIndexPage;
+
+      if (initialIndex != initialIndexPage) {
+        return <FavoritePokemonModel>[];
+      }
+
+      final list = pokemons
+          .toList()
+          .getRange(initialIndex, lastIndex)
+          .map((pokemon) => FavoritePokemonModel(
+              isFavorite: true,
+              base_experience: int.parse(pokemon.base_exprecience),
+              id: pokemon.id,
+              name: pokemon.name,
+              weight: int.parse(pokemon.weight)))
+          .toList();
+
+      return list;
     } catch (e, stackTrace) {
       throw Failure(message: e.toString(), stackTrace: stackTrace);
     }

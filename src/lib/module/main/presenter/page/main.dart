@@ -13,10 +13,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final box = Hive.box<ModelPokemon>("poke").listenable();
+  final box = pokeDex.box.listenable();
 
-  final dataSource =
-      FavoritesPokemonsDataSource(Hive.box<ModelPokemon>("poke"));
+  final dataSource = FavoritesPokemonsDataSource(pokeDex.box);
 
   // This widget is the root of your application.
   @override

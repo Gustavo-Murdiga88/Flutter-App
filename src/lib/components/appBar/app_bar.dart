@@ -18,52 +18,64 @@ class AppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Padding(
-            padding: const EdgeInsets.only(right: 90),
-            child: Center(
-              child: Text(
-                title ?? "App Pokemon",
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white70,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                ),
+        centerTitle: true,
+        leadingWidth: 80,
+        automaticallyImplyLeading: false,
+        primary: true,
+        leading: Builder(builder: (context) {
+          final shouldBeAppearArrowReturn =
+              Modular.to.canPop() && !Scaffold.of(context).isEndDrawerOpen;
+
+          if (shouldBeAppearArrowReturn) {
+            return IconButton(
+              onPressed: () {
+                Modular.to.pop();
+              },
+              icon: const Icon(Icons.arrow_back),
+            );
+          }
+          return const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                "https://media.licdn.com/dms/image/C4D0BAQFpjwdvGxJuTg/company-logo_200_200/0/1638359007014?e=2147483647&v=beta&t=-q_JJw95LcfsFFbd-OgVMImb2qTi6BF795hPTyHVeXs",
               ),
             ),
-          )),
+          );
+        }),
+        backgroundColor: Colors.green,
+        title: Text(
+          title ?? "App Pokemon",
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.white70,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ),
       endDrawer: Drawer(
-          shadowColor: Colors.green,
+          width: 290,
+          clipBehavior: Clip.none,
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              const UserAccountsDrawerHeader(
-                accountName: Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Text("Guarani sistemas")],
-                  ),
-                ),
-                accountEmail: SizedBox(),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                ),
-                currentAccountPictureSize: Size(280, 100),
-                currentAccountPicture: Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://avatars.githubusercontent.com/u/74632138?v=4")),
-                    ],
-                  ),
-                ),
-              ),
+              DrawerHeader(
+                  padding: EdgeInsets.zero,
+                  child: Container(
+                    height: 100,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          filterQuality: FilterQuality.high,
+                          repeat: ImageRepeat.noRepeat,
+                          image: NetworkImage(
+                              "https://emsaocarlos.com/wp-content/uploads/2022/01/guarani-sistemas-sao-carlos.jpg")),
+                    ),
+                  )),
               ListTile(
                 leading: const Icon(Icons.star, color: Colors.yellow),
                 title: const Text('Favoritos'),

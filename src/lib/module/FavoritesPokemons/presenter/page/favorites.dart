@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_connect/sockets/src/socket_notifier.dart';
 
 import '../../../../components/appBar/app_bar.dart';
 import '../../../../components/toast/toast.dart';
@@ -24,8 +25,6 @@ class _ListFavoritePokemonsState extends State<ListFavoritePokemons> {
 
   bool hasLastPage = false;
 
-  bool isFetching = false;
-
   final ScrollController controller = ScrollController();
 
   final favoritesStore = Modular.get<FavoritesPokemonsStore>();
@@ -45,29 +44,33 @@ class _ListFavoritePokemonsState extends State<ListFavoritePokemons> {
 
   void handleChangePagination() async {
     if (controller.offset >= controller.position.maxScrollExtent - 100 &&
-        !hasLastPage &&
-        !isFetching) {
-      isFetching = true;
+        !hasLastPage) {
+      controller.removeListener(handleChangePagination);
       final shouldBeGetMorePokemons =
           await favoritesStore.getManyPokemons(page, perPage);
       if (shouldBeGetMorePokemons) {
         page++;
-        isFetching = false;
       } else {
         hasLastPage = true;
-        isFetching = false;
       }
     }
   }
 
   @override
   void initState() {
-    super.initState();
     favoritesStore.getManyPokemons(page, perPage);
     controller.addListener(() {
       handleChangePagination();
     });
     page++;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(handleChangePagination);
+
+    super.dispose();
   }
 
   @override

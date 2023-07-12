@@ -1,5 +1,8 @@
 import 'package:hive/hive.dart';
 
+// unique instance of the hive
+final pokeDex = PokeDex.instance;
+
 @HiveType(typeId: 32)
 class ModelPokemon extends HiveObject {
   @HiveField(0)
@@ -57,4 +60,19 @@ class PokemonAdapter extends TypeAdapter<ModelPokemon> {
       ..writeByte(4)
       ..write(obj.specie);
   }
+}
+
+class PokeDex {
+  static final instance = PokeDex._();
+  final _name = "poke";
+
+  Box<ModelPokemon> get box {
+    return Hive.box("poke");
+  }
+
+  String get name {
+    return _name;
+  }
+
+  PokeDex._();
 }

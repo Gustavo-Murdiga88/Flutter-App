@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hive/hive.dart';
 
 import '../../core/services/infra/hive/adpter.dart';
 import '../main/presenter/page/main.dart';
@@ -21,7 +20,7 @@ class PokemonModule extends Module {
         Bind.factory((i) => PokemonsRepository(i())),
         Bind.factory((i) => UnfavoritePokemonUseCase(i())),
         Bind.factory((i) => PokemonsState(i(), i())),
-        Bind.factory((i) => PokemonsData(i(), Hive.box<ModelPokemon>("poke"))),
+        Bind.factory((i) => PokemonsData(i(), pokeDex.box)),
         Bind.factory((i) => FavoriteStore(i(), i())),
       ];
 

@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 
-import '../../../../core/errors/failure.dart';
 import '../../infra/repositories/implementations.dart';
 import '../errors/errors.dart';
 import '../models/pokemon.dart';
@@ -22,8 +21,8 @@ class GetPokemonUseCase {
       return Right(response);
     } on GetPokemonsErros catch (e) {
       return Left(e);
-    } catch (e, stackTrace) {
-      throw Failure(message: e.toString(), stackTrace: stackTrace);
+    } catch (e) {
+      rethrow;
     }
   }
 }

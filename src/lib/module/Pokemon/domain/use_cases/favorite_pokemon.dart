@@ -21,8 +21,8 @@ class FavoritePokemonUseCase {
       return Right(response);
     } on GetPokemonsErros catch (e) {
       return Left(e);
-    } catch (e, stackTrace) {
-      throw Failure(message: e.toString(), stackTrace: stackTrace);
+    } catch (e) {
+      rethrow;
     }
   }
 }

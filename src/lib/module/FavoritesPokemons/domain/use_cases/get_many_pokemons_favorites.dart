@@ -16,8 +16,10 @@ class GetManyPokemonsFavoritesUseCase {
           await _repository.getManyFavoritesPokemons(page, perPage);
 
       return Right(response);
-    } catch (e, stackTrace) {
-      return Left(Failure(message: e.toString(), stackTrace: stackTrace));
+    } on Failure catch (error) {
+      return Left(error);
+    } catch (e) {
+      rethrow;
     }
   }
 }
