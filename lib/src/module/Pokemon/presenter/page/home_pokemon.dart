@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../components/appBar/app_bar.dart';
 import '../../../../components/toast/toast.dart';
 import '../../../../core/services/infra/hive/adpter.dart';
-import '../../../../main.dart';
+import '../../../../../main.dart';
 import '../../domain/models/favoritePokemon.dart';
 import '../../../../components/CardPokemon/card_pokemo_widget.dart';
 import '../states/pokemons_states.dart';

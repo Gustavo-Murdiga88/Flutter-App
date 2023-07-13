@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/app_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'app_module.dart';
-import 'app_widget.dart';
-import 'core/services/infra/hive/adpter.dart';
+import 'src/app_widget.dart';
+import 'src/core/services/infra/hive/adpter.dart';
 
 late FToast fToast;
 

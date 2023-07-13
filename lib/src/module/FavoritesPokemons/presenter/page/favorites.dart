@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/sockets/src/socket_notifier.dart';
 
 import '../../../../components/appBar/app_bar.dart';
 import '../../../../components/toast/toast.dart';
 import '../../../../core/services/infra/hive/adpter.dart';
-import '../../../../main.dart';
+import '../../../../../main.dart';
 import '../../../Pokemon/domain/models/pokemon.dart';
 import '../../../../components/CardPokemon/card_pokemo_widget.dart';
 import '../states/pokemons_favorites_states.dart';

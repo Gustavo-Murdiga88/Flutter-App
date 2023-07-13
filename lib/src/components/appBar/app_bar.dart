@@ -61,8 +61,8 @@ class AppScaffold extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                  padding: EdgeInsets.zero,
-                  child: Container(
+                padding: EdgeInsets.zero,
+                child: Container(
                     height: 100,
                     width: double.infinity,
                     decoration: const BoxDecoration(
@@ -73,9 +73,10 @@ class AppScaffold extends StatelessWidget {
                           filterQuality: FilterQuality.high,
                           repeat: ImageRepeat.noRepeat,
                           image: NetworkImage(
-                              "https://emsaocarlos.com/wp-content/uploads/2022/01/guarani-sistemas-sao-carlos.jpg")),
-                    ),
-                  )),
+                            "https://emsaocarlos.com/wp-content/uploads/2022/01/guarani-sistemas-sao-carlos.jpg",
+                          )),
+                    )),
+              ),
               ListTile(
                 leading: const Icon(Icons.star, color: Colors.yellow),
                 title: const Text('Favoritos'),

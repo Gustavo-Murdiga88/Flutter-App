@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../src/lib/module/Pokemon/presenter/page/home_pokemon.dart';
+import '../lib/src/module/Pokemon/presenter/page/home_pokemon.dart';
 
 // ignore: avoid_relative_lib_imports
 
