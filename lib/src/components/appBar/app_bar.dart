@@ -72,8 +72,8 @@ class AppScaffold extends StatelessWidget {
                           alignment: Alignment.center,
                           filterQuality: FilterQuality.high,
                           repeat: ImageRepeat.noRepeat,
-                          image: NetworkImage(
-                            "https://emsaocarlos.com/wp-content/uploads/2022/01/guarani-sistemas-sao-carlos.jpg",
+                          image: AssetImage(
+                            "assets/images/drawer_header.jpg",
                           )),
                     )),
               ),
