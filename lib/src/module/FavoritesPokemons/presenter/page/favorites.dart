@@ -137,8 +137,8 @@ class _ListFavoritePokemonsState extends State<ListFavoritePokemons> {
 
                               fToast.showToast(
                                 child: const ToastComponent(
-                                    toastType: ToastType.alert,
-                                    message: "Pokemon removido com sucesso"),
+                                    toastType: ToastType.success,
+                                    message: "Pokemon adicionado com sucesso"),
                                 gravity: ToastGravity.TOP_LEFT,
                               );
                             },

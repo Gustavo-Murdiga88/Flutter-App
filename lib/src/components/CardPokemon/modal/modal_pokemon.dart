@@ -57,9 +57,6 @@ class ModalPokemon {
                       ),
                     )
                   ]),
-                  const SizedBox(
-                    height: 30,
-                  ),
                   Flex(direction: Axis.horizontal, children: [
                     Flexible(
                       flex: 1,
@@ -76,68 +73,67 @@ class ModalPokemon {
                       ),
                     ),
                     Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 25),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text("Espécie"),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Flexible(
-                                    child: Text(_specie,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          overflow: TextOverflow.ellipsis,
-                                        )),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text("Força"),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(_weight,
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Espécie"),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: Text(_specie,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       )),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text("Experiência:"),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(_xp,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Força"),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(_weight,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Experiência:"),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(_xp,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ]),
                 ],
               ),
