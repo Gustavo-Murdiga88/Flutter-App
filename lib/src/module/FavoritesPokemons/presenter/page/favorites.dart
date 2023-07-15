@@ -20,6 +20,7 @@ class ListFavoritePokemons extends StatefulWidget {
 
 class _ListFavoritePokemonsState extends State<ListFavoritePokemons> {
   int page = 0;
+  bool isFetching = false;
   int perPage = 5;
 
   bool hasLastPage = false;
@@ -43,14 +44,18 @@ class _ListFavoritePokemonsState extends State<ListFavoritePokemons> {
 
   void handleChangePagination() async {
     if (controller.offset >= controller.position.maxScrollExtent - 100 &&
-        !hasLastPage) {
-      controller.removeListener(handleChangePagination);
+        !hasLastPage &&
+        !isFetching) {
+      isFetching = true;
       final shouldBeGetMorePokemons =
           await favoritesStore.getManyPokemons(page, perPage);
+      isFetching = false;
+
       if (shouldBeGetMorePokemons) {
         page++;
       } else {
         hasLastPage = true;
+        controller.removeListener(handleChangePagination);
       }
     }
   }
